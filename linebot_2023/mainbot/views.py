@@ -12,6 +12,9 @@ from linebot.models import MessageEvent, TextSendMessage, ImageSendMessage
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
+basic_list = ['FAQ',]
+
+
 @csrf_exempt
 def callback(request):
     if request.method == 'POST':
@@ -28,14 +31,24 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 mtext=event.message.text
+                uid=event.source.user_id
+                profile=line_bot_api.get_profile(uid)
+                name=profile.display_name
+                pic_url=profile.picture_url
                 print(mtext)
+                print(uid)
+                print(name)
+                print(pic_url)
+                
+                message=[]
                 if mtext == '圖':
                     image_message = ImageSendMessage(
                         original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
                         preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
                     )
-                message=[]
-                message.append(TextSendMessage(text=mtext))
+                    message.append(image_message)
+                else:
+                    message.append(TextSendMessage(text=mtext))
 
                 
                 
