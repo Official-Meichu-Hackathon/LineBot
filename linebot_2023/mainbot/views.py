@@ -45,13 +45,21 @@ def callback(request):
                 if mtext in basic_list:
                     match mtext:
                         case 'FAQ':
-                            message.append(TextSendMessage(text='FAQ'))
+                            message.append(TextSendMessage(text='我是常見問題'))
                         case '手冊':
-                            message.append(TextSendMessage(text='手冊'))
+                            message.append(TextSendMessage(text='https://tenyear.meichuhackathon.org/'))
                         case '地圖':
-                            message.append(TextSendMessage(text='地圖'))
+                            image_message = ImageSendMessage(
+                                original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
+                                preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
+                            )
+                            message.append(image_message)
                         case '時程表':
-                            message.append(TextSendMessage(text='時程表'))
+                            image_message = ImageSendMessage(
+                                original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
+                                preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
+                            )
+                            message.append(image_message)
                         case '成果存放平台':
                             message.append(TextSendMessage(text='https://tenyear.meichuhackathon.org/'))
 
