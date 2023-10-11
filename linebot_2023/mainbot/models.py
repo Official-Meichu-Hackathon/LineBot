@@ -36,7 +36,7 @@ class token(models.Model):
     company = models.CharField(max_length=255,null=False,default='')
     def __str__(self):
         return self.token
-class ruffle(models.Model):
+class raffle(models.Model):
     user_id = models.IntegerField(default=0)
     name = models.CharField(max_length=255,null=False,default='')
     level = models.IntegerField(default=0)

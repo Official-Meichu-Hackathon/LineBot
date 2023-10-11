@@ -101,7 +101,7 @@ def callback(request):
                         user_info.raffle = int(mtext[8])
                         user_info.keys -= key_need[int(mtext[8])-1]
                         user_info.save()
-                        ruffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
+                        raffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
                         message.append(TextSendMessage(text=f'恭喜你兌換Level {user_info.raffle} 抽獎券成功'))
                 else:
                     try:
