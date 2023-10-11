@@ -74,27 +74,22 @@ def callback(request):
                     message.append(TextSendMessage(text='****抽獎方法說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))  
                     #log in 
                 else:
-                    all_tokens = token.objects.all()
-                    print(all_tokens)
                     try:
                         key = token.objects.get(token=mtext)
-                        
+                        user_info = User_Info.objects.get(uid=uid)
                         if key.used == True:
                             message.append(TextSendMessage(text='此序號已被使用過'))
-                            continue
-                        user_info = User_Info.objects.get(uid=uid)
-                        if getattr(user_info,key.company) == 1:
-                            message.append(TextSendMessage(text='你已經有'+key.company+'的抽獎資格了'))
-                            continue
-                        setattr(user_info,key.company,1)
-                        key.used = True
-                        user_info.keys += 1
-                        message.append(TextSendMessage(text=f'恭喜你獲得{key.company}的鑰匙\n 您現在擁有{user_info.keys}把鑰匙'))
+                        elif getattr(user_info,key.company) == 1:
+                            message.append(TextSendMessage(text='你已經有'+key.company+'的鑰匙了'))
+                        else:
+                            setattr(user_info,key.company,1)
+                            key.used = True
+                            user_info.keys += 1
+                            key.save()
+                            user_info.save()
+                            message.append(TextSendMessage(text=f'恭喜你獲得{key.company}的鑰匙\n 您現在擁有{user_info.keys}把鑰匙'))
                     except:
                         message.append(TextSendMessage(text='功能暫不開放或請輸入正確指令'))
-                
-                
-                
                 line_bot_api.reply_message(event.reply_token,message)
 
         return HttpResponse()
