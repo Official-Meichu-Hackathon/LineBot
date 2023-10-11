@@ -40,10 +40,13 @@ def callback(request):
                 print(uid)
                 print(name)
                 print(pic_url)
-                if User_Info.objects.filter(uid=uid).exists()==False:
-                    print('iamnew')
+                user_info = User_Info.objects.filter(uid=uid)
+                if user_info.exists()==False:
                     User_Info.objects.create(uid=uid,name=name,pic_url=pic_url,mtext=mtext,points=0)
-                    print(User_Info.objects.filter(uid=uid))
+                    print('create user with uid:'+uid+'name: '+name)
+                    user_info = User_Info.objects.get(uid=uid)
+                else:
+                    user_info = user_info.first()
                 message=[]
                 if mtext in basic_list:
                     match mtext:
