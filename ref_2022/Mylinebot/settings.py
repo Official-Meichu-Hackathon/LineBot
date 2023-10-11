@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 import django_on_heroku
-
+import dotenv
+dotenv.load_dotenv()
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,12 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-LINE_CHANNEL_ACCESS_TOKEN = 'ZpmPEYyXI96M22DXEGHNnFGDMNsexZMiOcRXeQPirjAGN1xGX+G0unwsxTBQiktTHzv48tKV5LtMSt+1P4CRzBTMoekIt0lW4PJ0h246EBFc/wKd7U+6mOb5H75KwZD4ubF86R9kedeWsXXOE9rrQAdB04t89/1O/w1cDnyilFU=' #在line developer的message api裡
-LINE_CHANNEL_SECRET = '73272c2a22df577329dd22b4e9eb3110' #在line developer的basic setting裡
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
+LINE_CHANNEL_SECRET = os.getenv('LIBE_CHANNEL_SECRET') #在line developer的basic setting裡
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rp8ctfhuyu_32ai4i)s)j^=b%k=8yq*%1n3)tx=m%o!5g__3dt'
-
+SECRET_KEY = os.getenv('OLD_SECRET_KEY') #在line developer的basic setting裡
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

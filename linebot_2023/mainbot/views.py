@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, TextSendMessage
+from linebot.models import MessageEvent, TextSendMessage, ImageSendMessage
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -28,8 +28,19 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 mtext=event.message.text
+                print(mtext)
+                if mtext == '圖':
+                    image_message = ImageSendMessage(
+                        original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
+                        preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
+                    )
                 message=[]
                 message.append(TextSendMessage(text=mtext))
+
+                
+                
+                
+                
                 line_bot_api.reply_message(event.reply_token,message)
 
         return HttpResponse()

@@ -15,9 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
- 
+from django.urls import path
+from django.urls import include, re_path
+from mainbot import views #MylinebotApp改成自己藍色的資料夾
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mainbot/', include('mainbot.urls')) #包含應用程式的網址
+    path('mainbot/', include('mainbot.urls')), #包含應用程式的網址
+    path('callback',views.callback)
 ]
