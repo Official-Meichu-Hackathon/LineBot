@@ -161,3 +161,4 @@ cython_debug/
 
 * MacOS specific files
 .DS_Store
+openhouse_key.py

@@ -12,7 +12,8 @@ from linebot.models import MessageEvent, TextSendMessage, ImageSendMessage
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
-basic_list = ['FAQ',]
+basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台']
+
 
 
 @csrf_exempt
@@ -30,7 +31,7 @@ def callback(request):
 
         for event in events:
             if isinstance(event, MessageEvent):
-                mtext=event.message.text
+                mtext=event.message.text  #input
                 uid=event.source.user_id
                 profile=line_bot_api.get_profile(uid)
                 name=profile.display_name
@@ -41,14 +42,19 @@ def callback(request):
                 print(pic_url)
                 
                 message=[]
-                if mtext == '圖':
-                    image_message = ImageSendMessage(
-                        original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
-                        preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
-                    )
-                    message.append(image_message)
-                else:
-                    message.append(TextSendMessage(text=mtext))
+                if mtext in basic_list:
+                    match mtext:
+                        case 'FAQ':
+                            message.append(TextSendMessage(text='FAQ'))
+                        case '手冊':
+                            message.append(TextSendMessage(text='手冊'))
+                        case '地圖':
+                            message.append(TextSendMessage(text='地圖'))
+                        case '時程表':
+                            message.append(TextSendMessage(text='時程表'))
+                        case '成果存放平台':
+                            message.append(TextSendMessage(text='https://tenyear.meichuhackathon.org/'))
+
 
                 
                 
