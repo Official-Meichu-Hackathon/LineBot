@@ -2,9 +2,8 @@ import random
 import string
 import collections
 used = collections.defaultdict(bool)
-begin ='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-total_lists = []
-
+begin ='LGTEKNMACWIXYZ'
+total_lists = [] 
 def generate_city_code(length=5):
     characters = string.ascii_letters + string.digits  # 英數大小寫字符
     city_code = ''.join(random.choice(characters) for _ in range(length))

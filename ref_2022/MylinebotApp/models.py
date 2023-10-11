@@ -24,7 +24,13 @@ class User_Info(models.Model):
 
     def __str__(self):
         return self.uid
-
+class token():
+    
+    
+    
+    
+    
+    
 import random
 # random_string = str(random.randint(100000, 999999))
 class TSMC(models.Model):
