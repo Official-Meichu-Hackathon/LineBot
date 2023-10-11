@@ -7,6 +7,7 @@ class User_Info(models.Model):
     pic_url = models.CharField(max_length=255,null=False)               #大頭貼網址
     mtext = models.CharField(max_length=255,blank=True,null=False)      #文字訊息紀錄
     mdt = models.DateTimeField(auto_now=True)                           #物件儲存的日期時間
+    raffle = models.IntegerField(default=0)
     keys = models.IntegerField(default=0)
     line = models.BooleanField(default=False)
     google = models.BooleanField(default=False)
@@ -35,3 +36,7 @@ class token(models.Model):
     company = models.CharField(max_length=255,null=False,default='')
     def __str__(self):
         return self.token
+class ruffle(models.Model):
+    user_id = models.IntegerField(default=0)
+    name = models.CharField(max_length=255,null=False,default='')
+    level = models.IntegerField(default=0)

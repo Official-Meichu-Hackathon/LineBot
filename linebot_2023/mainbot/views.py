@@ -16,7 +16,7 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則']
 company_list = ['AKATSUKI','CATHAY','ETTODAY','GOOGLE','ITSA','KKCOMPANY','LINE','MICRON','NXP','TSMC','TAIWANCEMENT','INTERACT_1','INTERACT_2','INTERACT_3']
 award = ['1asdfasdfasdf','2asfasDFASDF','3dsFASDFASDF']
-
+key_need = [3,7,12]
 # line = models.BooleanField(default=False)
 #     google = models.BooleanField(default=False)
 #     tsmc = models.BooleanField(default=False)
@@ -92,7 +92,17 @@ def callback(request):
                     print(user_info.id) 
                 elif re.match(r"查看Level \d 抽獎券",mtext):
                     message.append(TextSendMessage(text=award[int(mtext[8])-1]))
-                
+                elif re.match(r"兌換Level \d 抽獎券",mtext):
+                    if user_info.keys< int(key_need[int(mtext[8])-1]):
+                        message.append(TextSendMessage(text=f'你的鑰匙不夠喔，需要 {key_need[int(mtext[8])-1]} 把鑰匙'))
+                    elif user_info.raffle !=0:
+                        message.append(TextSendMessage(text=f'你已經兌換過Level {user_info.raffle} 抽獎券了喔'))
+                    else:
+                        user_info.raffle = int(mtext[8])
+                        user_info.keys -= key_need[int(mtext[8])-1]
+                        user_info.save()
+                        ruffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
+                        message.append(TextSendMessage(text=f'恭喜你兌換Level {user_info.raffle} 抽獎券成功'))
                 else:
                     try:
                         print('sorry')
