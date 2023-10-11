@@ -90,6 +90,8 @@ def callback(request):
                 elif mtext == '個人資訊':
                     print(user_info.name)
                     print(user_info.id) 
+                elif re.match(r"查看Level \d 抽獎券",mtext):
+                    message.append(TextSendMessage(text=award[int(mtext[8])-1]))
                 
                 else:
                     try:
