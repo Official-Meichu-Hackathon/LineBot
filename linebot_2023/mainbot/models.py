@@ -19,6 +19,7 @@ class User_Info(models.Model):
     cathay = models.BooleanField(default=False)
     taiwancement = models.BooleanField(default=False)
     itsa = models.BooleanField(default=False)
+    itsa2 = models.BooleanField(default=False)
     interact_1 = models.BooleanField(default=False)
     interact_2 = models.BooleanField(default=False)
     interact_3 = models.BooleanField(default=False)

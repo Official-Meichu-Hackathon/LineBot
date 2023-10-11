@@ -20,6 +20,7 @@ mapping = {'L':'line',
                 'C':'cathay',
                 'W':'taiwancement',
                 'I':'itsa',
+                'i':'itsa2',
                 'X':'interact_1',
                 'Y':'interact_2',
                 'Z':'interact_3'

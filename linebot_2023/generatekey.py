@@ -2,7 +2,7 @@ import random
 import string
 import collections
 used = collections.defaultdict(bool)
-begin ='LGTEKNMACWIXYZ'
+begin ='LGTEKNMACWIiXYZ'
 total_lists = [] 
 def generate_city_code(length=5):
     characters = string.ascii_letters + string.digits  # 英數大小寫字符

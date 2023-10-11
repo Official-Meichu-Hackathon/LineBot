@@ -8,13 +8,29 @@ from django.views.decorators.csrf import csrf_exempt
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
+import re
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則']
+company_list = ['AKATSUKI','CATHAY','ETTODAY','GOOGLE','ITSA','KKCOMPANY','LINE','MICRON','NXP','TSMC','TAIWANCEMENT','INTERACT_1','INTERACT_2','INTERACT_3']
+award = ['1asdfasdfasdf','2asfasDFASDF','3dsFASDFASDF']
 
-
+# line = models.BooleanField(default=False)
+#     google = models.BooleanField(default=False)
+#     tsmc = models.BooleanField(default=False)
+#     ettoday = models.BooleanField(default=False)
+#     kkcompany = models.BooleanField(default=False)
+#     nxp = models.BooleanField(default=False)
+#     micron = models.BooleanField(default=False)
+#     akatsuki = models.BooleanField(default=False)
+#     cathay = models.BooleanField(default=False)
+#     taiwancement = models.BooleanField(default=False)
+#     itsa = models.BooleanField(default=False)
+#     interact_1 = models.BooleanField(default=False)
+#     interact_2 = models.BooleanField(default=False)
+#     interact_3 = models.BooleanField(default=False)
 
 @csrf_exempt
 def callback(request):
@@ -72,14 +88,14 @@ def callback(request):
                             message.append(TextSendMessage(text='****活動規則說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))
                             message.append(TextSendMessage(text='****抽獎方法說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))  
                 elif mtext == '個人資訊':
-                    userinfo = User_Info.objects.filter(uid=uid)
-                    print(userinfo)
-                    message.append(TextSendMessage(text='****抽獎方法說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))  
-                    #log in 
+                    print(user_info.name)
+                    print(user_info.id) 
+                
                 else:
                     try:
+                        print('sorry')
                         key = token.objects.get(token=mtext)
-                        user_info = User_Info.objects.get(uid=uid)
+                        print(key)
                         if key.used == True:
                             message.append(TextSendMessage(text='此序號已被使用過'))
                         elif getattr(user_info,key.company) == 1:
