@@ -13,7 +13,7 @@ import re
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
-basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則']
+basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則','娛樂交流時間']
 company_list = [('akatsuki','曉數碼 Akatsuki Taiwan'),('cathay','國泰金控'),('ettoday','ETtoday新聞雲'),('google','Google'),('itsa','ITSA-易志偉教授'),('itsa2','ITSA-蕭宏章教授'),('kkcompany','科科科技（KKCompany Technologies）集團'),('line','LINE'),('micron','美光科技'),('nxp','恩智浦半導體與文曄科技'),('tsmc','台灣積體電路製造股份有限公司'),('taiwancement','台泥企業團'),('interact_1','活動一'),('interact_2','活動二'),('interact_3','活動三')]
 award = ['1asdfasdfasdf','2asfasDFASDF','3dsFASDFASDF']
 key_need = [3,7,12]
@@ -73,6 +73,11 @@ def callback(request):
                         case '企業博覽會規則':
                             message.append(TextSendMessage(text='****活動規則說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))
                             message.append(TextSendMessage(text='****抽獎方法說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))  
+                        case '娛樂交流時間':
+                            image_message = ImageSendMessage(
+                                original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
+                                preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
+                            )
                 elif mtext == '個人資訊':
                     raffle_temp = f'您有Level {user_info.raffle}  抽獎券'
                     if user_info.raffle == 0:
@@ -82,8 +87,6 @@ def callback(request):
                         if getattr(user_info,a) == 0:
                             mes+=b+'\n'
                     message.append(TextSendMessage(text=mes))
-                    print(user_info.name)
-                    print(user_info.id) 
                 elif re.match(r"查看Level \d 抽獎券",mtext):
                     message.append(TextSendMessage(text=award[int(mtext[8])-1]))
                 elif re.match(r"兌換Level \d 抽獎券",mtext):
