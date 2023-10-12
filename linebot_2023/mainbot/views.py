@@ -14,23 +14,9 @@ line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則']
-company_list = ['AKATSUKI','CATHAY','ETTODAY','GOOGLE','ITSA','KKCOMPANY','LINE','MICRON','NXP','TSMC','TAIWANCEMENT','INTERACT_1','INTERACT_2','INTERACT_3']
+company_list = [('akatsuki','曉數碼 Akatsuki Taiwan'),('cathay','國泰金控'),('ettoday','ETtoday新聞雲'),('google','Google'),('itsa','ITSA-易志偉教授'),('itsa2','ITSA-蕭宏章教授'),('kkcompany','科科科技（KKCompany Technologies）集團'),('line','LINE'),('micron','美光科技'),('nxp','恩智浦半導體與文曄科技'),('tsmc','台灣積體電路製造股份有限公司'),('taiwancement','台泥企業團'),('interact_1','活動一'),('interact_2','活動二'),('interact_3','活動三')]
 award = ['1asdfasdfasdf','2asfasDFASDF','3dsFASDFASDF']
 key_need = [3,7,12]
-# line = models.BooleanField(default=False)
-#     google = models.BooleanField(default=False)
-#     tsmc = models.BooleanField(default=False)
-#     ettoday = models.BooleanField(default=False)
-#     kkcompany = models.BooleanField(default=False)
-#     nxp = models.BooleanField(default=False)
-#     micron = models.BooleanField(default=False)
-#     akatsuki = models.BooleanField(default=False)
-#     cathay = models.BooleanField(default=False)
-#     taiwancement = models.BooleanField(default=False)
-#     itsa = models.BooleanField(default=False)
-#     interact_1 = models.BooleanField(default=False)
-#     interact_2 = models.BooleanField(default=False)
-#     interact_3 = models.BooleanField(default=False)
 
 @csrf_exempt
 def callback(request):
@@ -88,6 +74,14 @@ def callback(request):
                             message.append(TextSendMessage(text='****活動規則說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))
                             message.append(TextSendMessage(text='****抽獎方法說明****\n1. afdsfadsf\n2. asdfasdfasdf\n3. asdfasdfasdf'))  
                 elif mtext == '個人資訊':
+                    raffle_temp = f'您有Level {user_info.raffle}  抽獎券'
+                    if user_info.raffle == 0:
+                        raffle_temp = '您還沒有抽獎券'
+                    mes = f'您的名字：{user_info.name}\n您的序號：{user_info.id}\n您目前擁有鑰匙數：{user_info.keys}\n{raffle_temp}\n您抽到的獎品：{user_info.prize}\n您還需要以下鑰匙：\n'
+                    for (a,b) in company_list:
+                        if getattr(user_info,a) == 0:
+                            mes+=b+'\n'
+                    message.append(TextSendMessage(text=mes))
                     print(user_info.name)
                     print(user_info.id) 
                 elif re.match(r"查看Level \d 抽獎券",mtext):
