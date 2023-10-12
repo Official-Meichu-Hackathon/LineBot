@@ -10,7 +10,7 @@ from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
 import re
 from mainbot.admin_ids import admin_ids
-
+from collections import defaultdict
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
@@ -54,30 +54,44 @@ def callback(request):
                     if user_info.uid not in admin_ids:
                         message.append(TextSendMessage(text='你不是管理員'))
                         continue
-                    all_raffle = raffle.objects.all()
+                    all_raffle = Raffle.objects.all()
                     temp = []
                     for raffle in all_raffle:
                         temp.append([raffle.id, raffle.name, raffle.level])
-                    print(temp)
                     message.append(TextSendMessage(text=f'{temp}'))    
                 elif mtext == 'company distribute':
                     if user_info.uid not in admin_ids:
                         message.append(TextSendMessage(text='你不是管理員'))
                         continue
-                    
+                    all_token = Token.objects.all()
+                    count = defaultdict(int)
+                    for token in all_token:
+                        count[token.company]+=token.used
+                    message.append(TextSendMessage(text=f'{count}'))
                 elif mtext == 'user ratio':
                     if user_info.uid not in admin_ids:
                         message.append(TextSendMessage(text='你不是管理員'))
                         continue
                     all_user_info_records = User_Info.objects.all()
-                    users_all = []
+                    ratio = defaultdict(int)
                     for user_info in all_user_info_records:
                         temp = 0
                         for (a,b) in company_list:
                             temp += getattr(user_info,a)
-                        users_all.append(temp)
-                    print(users_all)
-                    message.append(TextSendMessage(text=f'{users_all}'))
+                        ratio[temp]+=1
+                    message.append(TextSendMessage(text=f'{ratio}'))
+                elif re.match(r"award,(\d+),(.*)",mtext):
+                    if user_info.uid not in admin_ids:
+                        message.append(TextSendMessage(text='你不是管理員'))
+                        continue
+                    match = re.match(r"award,(\d+),(.*)",mtext)
+                    num = match.group(1)
+                    # 提取字串部分
+                    aw = match.group(2)
+                    award_info = User_Info.objects.get(id=num)
+                    award_info.prize = aw
+                    award_info.save()
+                    continue
                 elif mtext in basic_list:
                     match mtext:
                         case 'FAQ':
@@ -134,13 +148,13 @@ def callback(request):
                         user_info.raffle = int(mtext[8])
                         user_info.keys -= key_need[int(mtext[8])-1]
                         user_info.save()
-                        raffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
+                        Raffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
                         message.append(TextSendMessage(text=f'恭喜你兌換Level {user_info.raffle} 抽獎券成功'))
                 elif mtext == '兌換抽獎券':
                     continue
                 else:
                     try:
-                        key = token.objects.get(token=mtext) 
+                        key = Token.objects.get(token=mtext) 
                         if key.used == True:
                             message.append(TextSendMessage(text='此序號已被使用過'))
                         elif getattr(user_info,key.company) == 1:

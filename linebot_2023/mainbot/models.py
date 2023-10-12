@@ -29,13 +29,13 @@ class User_Info(models.Model):
     def __str__(self):
         return self.uid
 
-class token(models.Model):
+class Token(models.Model):
     token = models.CharField(max_length=10,null=False,default='')
     used = models.BooleanField(default=False)
     company = models.CharField(max_length=255,null=False,default='')
     def __str__(self):
         return self.token
-class raffle(models.Model):
+class Raffle(models.Model):
     user_id = models.IntegerField(default=0)
     name = models.CharField(max_length=255,null=False,default='')
     level = models.IntegerField(default=0)
