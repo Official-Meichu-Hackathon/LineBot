@@ -29,10 +29,8 @@ class User_Info(models.Model):
     def __str__(self):
         return self.uid
 
-import random
-# random_string = str(random.randint(100000, 999999))
 class token(models.Model):
-    token = models.CharField(max_length=10,null=False,default='')         #user_id
+    token = models.CharField(max_length=10,null=False,default='')
     used = models.BooleanField(default=False)
     company = models.CharField(max_length=255,null=False,default='')
     def __str__(self):
