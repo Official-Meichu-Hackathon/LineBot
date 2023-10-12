@@ -78,6 +78,7 @@ def callback(request):
                                 original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
                                 preview_image_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png'
                             )
+                            message.append(image_message)
                 elif mtext == '個人資訊':
                     raffle_temp = f'您有Level {user_info.raffle}  抽獎券'
                     if user_info.raffle == 0:
@@ -100,6 +101,8 @@ def callback(request):
                         user_info.save()
                         raffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
                         message.append(TextSendMessage(text=f'恭喜你兌換Level {user_info.raffle} 抽獎券成功'))
+                elif mtext == '兌換抽獎券':
+                    continue
                 else:
                     try:
                         print('sorry')
