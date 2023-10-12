@@ -80,6 +80,16 @@ def callback(request):
                             temp += getattr(user_info,a)
                         ratio[temp]+=1
                     message.append(TextSendMessage(text=f'{ratio}'))
+                elif mtext =='test':
+                    if user_info.uid not in admin_ids:
+                        message.append(TextSendMessage(text='你不是管理員'))
+                        continue
+                    all_user_info_records = User_Info.objects.all()
+                    temp = []
+                    for user_info in all_user_info_records:
+                        temp.append([user_info.id, user_info.name, user_info.uid])
+                    print(temp)
+                    message.append(TextSendMessage(text=f'{temp}')) 
                 elif re.match(r"award,(\d+),(.*)",mtext):
                     if user_info.uid not in admin_ids:
                         message.append(TextSendMessage(text='你不是管理員'))
@@ -129,14 +139,7 @@ def callback(request):
                     for (a,b) in company_list:
                         if getattr(user_info,a) == 0:
                             mes+=b+'\n'
-                    message.append(TextSendMessage(text=mes))
-                elif mtext =='test':
-                    all_user_info_records = User_Info.objects.all()
-                    temp = []
-                    for user_info in all_user_info_records:
-                        temp.append([user_info.id, user_info.name, user_info.uid])
-                    print(temp)
-                    message.append(TextSendMessage(text=f'{temp}'))   
+                    message.append(TextSendMessage(text=mes))  
                 elif re.match(r"查看Level \d 抽獎券",mtext):
                     message.append(TextSendMessage(text=award[int(mtext[8])-1]))
                 elif re.match(r"兌換Level \d 抽獎券",mtext):
