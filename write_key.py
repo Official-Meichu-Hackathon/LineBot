@@ -8,7 +8,7 @@ from mainbot.models import Token
 import openhouse_key as data
 # 寫入token資料
 mapping = {'A': ('曉數碼 Akatsuki Taiwan','akatsuki'),
-           'C': ('國泰金控','cathey'),
+           'C': ('國泰金控','cathay'),
             'E': ('ETtoday新聞雲','ettoday'),
             'G': ('Google','google'),
             'I': ('ITSA-易志偉教授','itsa'),
