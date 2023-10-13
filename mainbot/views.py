@@ -85,6 +85,10 @@ def callback(request):
                         message.append(TextSendMessage(text='你不是管理員'))
                         continue
                     all_user_info_records = User_Info.objects.all()
+                    all_raffle = Raffle.objects.all()
+                    all_token = Token.objects.all()
+                    # for token in all_token:
+                    #     print(token.token,token.company,token.used)
                     temp = []
                     for user_info in all_user_info_records:
                         temp.append([user_info.id, user_info.name, user_info.uid])
@@ -135,7 +139,7 @@ def callback(request):
                     raffle_temp = f'您有Level {user_info.raffle}  抽獎券'
                     if user_info.raffle == 0:
                         raffle_temp = '您還沒有抽獎券'
-                    mes = f'您的名字：{user_info.name}\n您的序號：{user_info.id}\n您目前擁有鑰匙數：{user_info.keys}\n{raffle_temp}\n您抽到的獎品：{user_info.prize}\n您還需要以下鑰匙：\n'
+                    mes = f'您的名字：{user_info.name}\n您的序號： {user_info.id}\n您目前擁有鑰匙數： {user_info.keys}\n{raffle_temp}\n您抽到的獎品： {user_info.prize}\n您還需要以下鑰匙：\n'
                     for (a,b) in company_list:
                         if getattr(user_info,a) == 0:
                             mes+=b+'\n'
@@ -156,19 +160,24 @@ def callback(request):
                 elif mtext == '兌換抽獎券':
                     continue
                 else:
+                    print("good")
                     try:
                         key = Token.objects.get(token=mtext) 
+                        print(key.used)
+                        print(key.code)
+                        print(getattr(user_info,key.code))
                         if key.used == True:
                             message.append(TextSendMessage(text='此序號已被使用過'))
-                        elif getattr(user_info,key.company) == 1:
-                            message.append(TextSendMessage(text='你已經有'+key.company+'的鑰匙了'))
+                        elif getattr(user_info,key.code) == 1:
+                            message.append(TextSendMessage(text='你已經有 '+key.company+' 的鑰匙了'))
                         else:
-                            setattr(user_info,key.company,1)
+                            print("good")
+                            setattr(user_info,key.code,1)
                             key.used = True
                             user_info.keys += 1
                             key.save()
                             user_info.save()
-                            message.append(TextSendMessage(text=f'恭喜你獲得{key.company}的鑰匙\n 您現在擁有{user_info.keys}把鑰匙'))
+                            message.append(TextSendMessage(text=f'恭喜你獲得 {key.company} 的鑰匙\n 您現在擁有{user_info.keys}把鑰匙'))
                     except:
                         message.append(TextSendMessage(text='功能暫不開放或請輸入正確指令'))
                 line_bot_api.reply_message(event.reply_token,message)

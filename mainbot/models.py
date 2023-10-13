@@ -33,6 +33,7 @@ class Token(models.Model):
     token = models.CharField(max_length=10,null=False,default='')
     used = models.BooleanField(default=False)
     company = models.CharField(max_length=255,null=False,default='')
+    code = models.CharField(max_length=255,null=False,default='')
     def __str__(self):
         return self.token
 class Raffle(models.Model):
