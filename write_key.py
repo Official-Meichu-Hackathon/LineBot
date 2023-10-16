@@ -19,9 +19,9 @@ mapping = {'A': ('曉數碼 Akatsuki Taiwan','akatsuki'),
             'N': ('恩智浦半導體與文曄科技','nxp'),
             'T': ('台灣積體電路製造股份有限公司','tsmc'),
             'W': ('台泥企業團','taiwancement'),
-            'X': ('活動一','interact_1'),
-            'Y': ('活動二','interact_2'),
-            'Z': ('活動三','interact_3'),
+            'X': ('就是不給泡','interact_1'),
+            'Y': ('星際大戰','interact_2'),
+            'Z': ('台灣有梭哈','interact_3'),
             }
 def write_token_data():
     for keys in data.total_list:

@@ -40,3 +40,5 @@ class Raffle(models.Model):
     user_id = models.IntegerField(default=0)
     name = models.CharField(max_length=255,null=False,default='')
     level = models.IntegerField(default=0)
+    def __str__(self):
+        return str(self.user_id)
