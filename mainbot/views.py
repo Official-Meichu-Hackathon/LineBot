@@ -54,7 +54,6 @@ def callback(request):
                     user_info = user_info.first()
                 message=[]
                 if mtext == '梅竹黑客松開始抽獎':
-                    
                     if user_info.uid not in admin_ids:
                         message.append(TextSendMessage(text='你不是管理員'))
                         continue
@@ -87,11 +86,32 @@ def callback(request):
                             mes+=f'\nid:{lucky_user.id} name:{lucky_user.name} prize:{prizes[i][j]}'
                             print(f'id:{lucky_user.id} name:{lucky_user.name} prize:{prizes[i][j]}')
                     message.append(TextSendMessage(text=mes))
+                # elif re.match(r"加載key\d+",mtext):
+                #     if user_info.uid not in admin_ids:
+                #         message.append(TextSendMessage(text='你不是管理員'))
+                #         continue
+                #     match = re.search(r"加載key(\d)+", mtext)
+                #     digit_part = match.group(1)
+                #     mainbot.write_key.write_token_data(digit_part)
+                #     message.append(TextSendMessage(text=f'success {len(Token.objects.all())}'))
+                # elif mtext=='刪除key':
+                #     if user_info.uid not in admin_ids:
+                #         message.append(TextSendMessage(text='你不是管理員'))
+                #         continue
+                #     Token.objects.all().delete()
+                #     message.append(TextSendMessage(text=f'success {len(Token.objects.all())}'))
                 elif mtext=='test':
                     all_raffle = Raffle.objects.all()
+                    all_user = User_Info.objects.all()
+                    all_token = Token.objects.all()
+                    for user in all_user:
+                        print(user.id, user.name, user.raffle, user.prize)
                     for raffle in all_raffle:
                         print(raffle.user_id,raffle.name,raffle.level)
-                    
+                    print(len(all_token))
+                    # for token in all_token:
+                    #     print(token.token,token.company,token.code,token.used)
+                    message.append(TextSendMessage(text=f'success {len(all_token)}'))
                         
                 elif mtext == 'company distribute':
                     if user_info.uid not in admin_ids:
@@ -114,8 +134,6 @@ def callback(request):
                             temp += getattr(user_info,a)
                         ratio[temp]+=1
                     message.append(TextSendMessage(text=f'{ratio}'))
-                elif mtext == '兌換抽獎券':       
-                    continue
                 elif mtext in basic_list:
                     match mtext:
                         case 'FAQ':

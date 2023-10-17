@@ -24,12 +24,13 @@ mapping = {'A': ('曉數碼 Akatsuki Taiwan','akatsuki'),
             'Z': ('台灣有梭哈','interact_3'),
             }
 def write_token_data():
+    Token.objects.all().delete()
     for keys in data.total_list:
+        total = 0;
         for key in keys:
-            print(key,mapping[key[0]][0],mapping[key[0]][1])
-            
+            total+=1
             Token.objects.create(token=key,company=mapping[key[0]][0],code=mapping[key[0]][1] )
-        
+        print(total)
 
 if __name__ == '__main__':
     write_token_data()
