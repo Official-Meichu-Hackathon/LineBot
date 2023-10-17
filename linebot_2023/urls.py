@@ -22,5 +22,6 @@ from mainbot import views #MylinebotApp改成自己藍色的資料夾
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('mainbot/', include('mainbot.urls')), #包含應用程式的網址
-    path('callback',views.callback)
+    path('callback',views.callback),
+    path('callback/',views.callback)
 ]

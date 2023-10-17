@@ -16,7 +16,7 @@ line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則','娛樂交流時間']
-company_list = [('akatsuki','曉數碼 Akatsuki Taiwan'),('cathay','國泰金控'),('ettoday','ETtoday新聞雲'),('google','Google'),('itsa','ITSA-易志偉教授'),('itsa2','ITSA-蕭宏章教授'),('kkcompany','科科科技（KKCompany Technologies）集團'),('line','LINE'),('micron','美光科技'),('nxp','恩智浦半導體與文曄科技'),('tsmc','台灣積體電路製造股份有限公司'),('taiwancement','台泥企業團'),('interact_1','活動一'),('interact_2','活動二'),('interact_3','活動三')]
+company_list = [('akatsuki','曉數碼 Akatsuki Taiwan'),('cathay','國泰金控'),('ettoday','ETtoday新聞雲'),('google','Google'),('itsa','ITSA-易志偉教授'),('itsa2','ITSA-蕭宏章教授'),('kkcompany','科科科技（KKCompany Technologies）集團'),('line','LINE'),('micron','美光科技'),('nxp','恩智浦半導體與文曄科技'),('tsmc','台灣積體電路製造股份有限公司'),('taiwancement','台泥企業團'),('interact_1','就是不給泡'),('interact_2','星際大戰'),('interact_3','台灣有梭哈')]
 award = ['Level 1🌱\n黑客松紀念T-shirt 25件\n精美大松帆布袋 50個',
          'Level 2🌿\n100元健人餐折價券 50張\n筆電多功能吸盤折疊支架 1個\n記憶棉駝峰U型枕 1個\n304不鏽鋼雙飲口手提保溫瓶 1個 \n200元墊腳石網路折價券 10張\n鑄鐵鍋矽膠折折盒 4張\n有點麻購物袋–大ㄎ一ㄤ 6張\n威秀電影票券 3張\n統一超商100元禮券 24張',
          'Level 3🌲\nMUJI USB桌上型風扇 1台\n柯達底片相機 1台\n雙層防燙不鏽鋼美食鍋 1個\nSony立體聲耳罩式耳機 1副\n無線快充行動電源 1個\n好提鈦瓷層保溫杯 8個\nGW水玻璃經典無線迷你除濕機 1台']
@@ -62,7 +62,7 @@ def callback(request):
                     all_user = User_Info.objects.all()
                     for user in all_user: #reset
                         print(user.id, user.name, user.raffle, user.prize)    
-                        user.prize = 'None'
+                        user.prize = '參加獎'
                         user.save()
                     
                     for raffle in all_raffle:

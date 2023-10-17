@@ -11,7 +11,7 @@ def generate_city_code(length=5):
         city_code = ''.join(random.choice(characters) for _ in range(length))
     return city_code
 
-num_city_codes = 10  # 想生成的城市代碼數量
+
 f = open("openhouse_key.py",'w')
 for be in begin:
     temp  = []
