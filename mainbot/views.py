@@ -17,9 +17,9 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 basic_list = ['FAQ','手冊','地圖','時程表','成果存放平台','企業博覽會規則','娛樂交流時間']
 company_list = [('akatsuki','曉數碼 Akatsuki Taiwan'),('cathay','國泰金控'),('ettoday','ETtoday新聞雲'),('google','Google'),('itsa','ITSA-易志偉教授'),('itsa2','ITSA-蕭宏章教授'),('kkcompany','科科科技（KKCompany Technologies）集團'),('line','LINE'),('micron','美光科技'),('nxp','恩智浦半導體與文曄科技'),('tsmc','台灣積體電路製造股份有限公司'),('taiwancement','台泥企業團'),('interact_1','就是不給泡'),('interact_2','星際大戰'),('interact_3','台灣有梭哈')]
-award = ['Level 1🌱\n黑客松紀念T-shirt 25件\n精美大松帆布袋 50個',
-         'Level 2🌿\n100元健人餐折價券 50張\n筆電多功能吸盤折疊支架 1個\n記憶棉駝峰U型枕 1個\n304不鏽鋼雙飲口手提保溫瓶 1個 \n200元墊腳石網路折價券 10張\n鑄鐵鍋矽膠折折盒 4張\n有點麻購物袋–大ㄎ一ㄤ 6張\n威秀電影票券 3張\n統一超商100元禮券 24張',
-         'Level 3🌲\nMUJI USB桌上型風扇 1台\n柯達底片相機 1台\n雙層防燙不鏽鋼美食鍋 1個\nSony立體聲耳罩式耳機 1副\n無線快充行動電源 1個\n好提鈦瓷層保溫杯 8個\nGW水玻璃經典無線迷你除濕機 1台']
+award = ['🌱Level 1🌱\n-黑客松紀念T-shirt 25 件\n-精美大松帆布袋 50 個',
+         '🌿Level 2🌿\n-100元健人餐折價券 50 張\n-筆電多功能吸盤折疊支架 1 組\n-記憶棉駝峰U型枕 1 組\n-304不鏽鋼雙飲口手提保溫瓶 1 個 \n-200元墊腳石網路折價券 10 張\n-鑄鐵鍋矽膠折折盒 4 組\n-有點麻購物袋–大ㄎ一ㄤ 6 張\n-威秀電影票券 3 張\n-統一超商100元禮券 24 張',
+         '🌳Level 3🌳\n-無印良品USB桌上型風扇/低噪音/粉 1 臺\n-柯達M35 Film Camera 底片相機（薄荷綠）1 臺\n-M19雙層防燙不鏽鋼美食鍋1.2L-白木紋 1 組\n- Sony 立體聲耳罩式耳機 MDR-ZX110 1 副 \n-無線快充行動電源自帶線磁吸無線充 1 組\n-好提鈦瓷層保溫杯 1 個\n-GW 水玻璃經典2.0無線式迷你除濕機 1 臺']
 key_need = [0,3,7,12]
 
 @csrf_exempt
@@ -140,8 +140,8 @@ def callback(request):
                         case '成果存放平台':
                             message.append(TextSendMessage(text='https://tenyear.meichuhackathon.org/'))
                         case '企業博覽會規則':
-                            message.append(TextSendMessage(text="歡迎各位進入2023企業博覽會的抽獎活動🥰🎉\n\n🌟活動規則🌟\n1️⃣參加者完成企博攤位任務或參與指定娛樂交流活動\n2️⃣完成後即可領取密碼紙\n3️⃣將密碼輸入至 LINE Bot\n4️⃣輸入後將顯示個人鑰匙累積總數\n\n📌一個企業僅可得一把鑰匙\n📌每人的企業密碼皆不相同\n📌直接輸入密碼即可\n📌密碼紙請拿至垃圾桶丟棄\n📌有任何問題歡迎詢問企博工作人員"))  
-                            message.append(TextSendMessage(text='✨抽獎方法✨\n1️⃣在 LINE Bot 上按「兌換抽獎券」\n2️⃣選擇欲兌換的等級抽獎券\n3️⃣10/22（日）由工作人員統一抽獎\n4️⃣LINE Bot 會廣播中獎名單\n\n🎟️抽獎時間：10/22（日）10:30 - 11:00\n🎟️領獎時間：10/22（日）11:00 - 13:30\n\n📍一個人只有一張抽獎券\n📍詳細獎品清單請按「兌換抽獎券」➡️「查看 Level x 抽獎券」'))
+                            message.append(TextSendMessage(text="歡迎各位進入2023企業博覽會的抽獎活動🥰🎉\n🌟活動規則🌟\n1️⃣參加者完成企博攤位任務或參與指定娛樂交流\n2️⃣完成後即可向企業人員或關主領取密碼紙\n3️⃣將密碼輸入至 LINE Bot 聊天室\n4️⃣輸入後將顯示個人鑰匙累積總數\n\n📌一間企業 / 一個活動僅得一把鑰匙\n📌每個人的密碼皆不相同\n📌直接在聊天室輸入密碼即可\n📌密碼紙請拿至垃圾桶丟棄\n📌有任何問題歡迎詢問企博工作人員"))  
+                            message.append(TextSendMessage(text='✨抽獎方法✨\n1️⃣在 LINE Bot 上按「兌換抽獎券」\n2️⃣選擇欲兌換的等級抽獎券\n（10/22（日）10:30 前都可以更動抽獎券等級）\n3️⃣10/22（日）將由工作人員統一抽獎\n4️⃣抽獎結果可於 10/22（日）11:00 後在「個人資訊」中查看\n\n🎟️抽獎時間：10/22（日）10:30 - 11:00\n🎟️領獎時間：10/22（日）11:00 - 13:30\n（如未於指定時間內領取獎品，將視為自動放棄中獎資格）\n\n📍一個人只有一張抽獎券\n📍詳細獎品請按「兌換抽獎券」➡️「查看 Level x 獎品」\n📍Level 3 可抽 Level 1 ~ 3 的獎品\n📍Level 2 可抽 Level 1 ~ 2 的獎品\n📍Level 1 可抽 Level 1 的獎品\n📍未中獎者可至抽獎台領取參加獎'))
                         case '娛樂交流時間':
                             image_message = ImageSendMessage(
                                 original_content_url='https://media.nownews.com/nn_media/thumbnail/2019/10/1570089924-27a9b9c9d7facd3422fe4610dd8ebe42-696x386.png',
