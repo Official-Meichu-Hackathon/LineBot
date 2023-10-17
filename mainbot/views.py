@@ -20,7 +20,7 @@ company_list = [('akatsuki','曉數碼 Akatsuki Taiwan'),('cathay','國泰金控
 award = ['Level 1🌱\n黑客松紀念T-shirt 25件\n精美大松帆布袋 50個',
          'Level 2🌿\n100元健人餐折價券 50張\n筆電多功能吸盤折疊支架 1個\n記憶棉駝峰U型枕 1個\n304不鏽鋼雙飲口手提保溫瓶 1個 \n200元墊腳石網路折價券 10張\n鑄鐵鍋矽膠折折盒 4張\n有點麻購物袋–大ㄎ一ㄤ 6張\n威秀電影票券 3張\n統一超商100元禮券 24張',
          'Level 3🌲\nMUJI USB桌上型風扇 1台\n柯達底片相機 1台\n雙層防燙不鏽鋼美食鍋 1個\nSony立體聲耳罩式耳機 1副\n無線快充行動電源 1個\n好提鈦瓷層保溫杯 8個\nGW水玻璃經典無線迷你除濕機 1台']
-key_need = [3,7,12]
+key_need = [0,3,7,12]
 
 @csrf_exempt
 def callback(request):
@@ -86,20 +86,6 @@ def callback(request):
                             mes+=f'\nid:{lucky_user.id} name:{lucky_user.name} prize:{prizes[i][j]}'
                             print(f'id:{lucky_user.id} name:{lucky_user.name} prize:{prizes[i][j]}')
                     message.append(TextSendMessage(text=mes))
-                # elif re.match(r"加載key\d+",mtext):
-                #     if user_info.uid not in admin_ids:
-                #         message.append(TextSendMessage(text='你不是管理員'))
-                #         continue
-                #     match = re.search(r"加載key(\d)+", mtext)
-                #     digit_part = match.group(1)
-                #     mainbot.write_key.write_token_data(digit_part)
-                #     message.append(TextSendMessage(text=f'success {len(Token.objects.all())}'))
-                # elif mtext=='刪除key':
-                #     if user_info.uid not in admin_ids:
-                #         message.append(TextSendMessage(text='你不是管理員'))
-                #         continue
-                #     Token.objects.all().delete()
-                #     message.append(TextSendMessage(text=f'success {len(Token.objects.all())}'))
                 elif mtext=='test':
                     all_raffle = Raffle.objects.all()
                     all_user = User_Info.objects.all()
@@ -111,8 +97,7 @@ def callback(request):
                     print(len(all_token))
                     # for token in all_token:
                     #     print(token.token,token.company,token.code,token.used)
-                    message.append(TextSendMessage(text=f'success {len(all_token)}'))
-                        
+                    message.append(TextSendMessage(text=f'success {len(all_token)}'))        
                 elif mtext == 'company distribute':
                     if user_info.uid not in admin_ids:
                         message.append(TextSendMessage(text='你不是管理員'))
@@ -175,13 +160,10 @@ def callback(request):
                 elif re.match(r"查看Level \d 抽獎券",mtext):
                     message.append(TextSendMessage(text=award[int(mtext[8])-1]))
                 elif re.match(r"兌換Level \d 抽獎券",mtext):
-                    if user_info.raffle != 0:
-                        addition = key_need[user_info.raffle-1]
-                    else:
-                        addition = 0
+                    addition = key_need[int(mtext[8])]
                     print(addition)
                     if addition+user_info.keys< int(key_need[int(mtext[8])-1]):
-                        message.append(TextSendMessage(text=f'你的鑰匙不夠喔，需要 {key_need[int(mtext[8])-1]} 把鑰匙'))
+                        message.append(TextSendMessage(text=f'你的鑰匙不夠喔，需要 {key_need[int(mtext[8])]} 把鑰匙'))
                     else:
                         if user_info.raffle != 0:
                             raffle_record = Raffle.objects.get(user_id=user_info.id)
@@ -189,11 +171,11 @@ def callback(request):
                             raffle_record.delete()
                         user_info.raffle = int(mtext[8])
                         user_info.keys += addition
-                        user_info.keys -= key_need[int(mtext[8])-1]
+                        user_info.keys -= key_need[int(mtext[8])]
                         user_info.save()
                         Raffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
                         message.append(TextSendMessage(text=f'恭喜你兌換Level {user_info.raffle} 抽獎券成功'))
-                elif mtext == '兌換抽獎券':
+                elif mtext == '兌換抽獎券':# since it will call the picture in linebot on developer setting we need not to use it
                     continue
                 else:
                     print("no")
