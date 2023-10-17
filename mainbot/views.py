@@ -162,7 +162,7 @@ def callback(request):
                 elif re.match(r"兌換Level \d 抽獎券",mtext):
                     addition = key_need[int(mtext[8])]
                     print(addition)
-                    if addition+user_info.keys< int(key_need[int(mtext[8])-1]):
+                    if addition+user_info.keys< int(key_need[int(mtext[8])]):
                         message.append(TextSendMessage(text=f'你的鑰匙不夠喔，需要 {key_need[int(mtext[8])]} 把鑰匙'))
                     else:
                         if user_info.raffle != 0:
@@ -174,7 +174,7 @@ def callback(request):
                         user_info.keys -= key_need[int(mtext[8])]
                         user_info.save()
                         Raffle.objects.create(user_id=user_info.id,name=user_info.name,level=int(mtext[8]))
-                        message.append(TextSendMessage(text=f'恭喜你兌換Level {user_info.raffle} 抽獎券成功'))
+                        message.append(TextSendMessage(text=f'恭喜您兌換Level {user_info.raffle} 抽獎券成功'))
                 elif mtext == '兌換抽獎券':# since it will call the picture in linebot on developer setting we need not to use it
                     continue
                 else:
@@ -187,7 +187,7 @@ def callback(request):
                         if key.used == True:
                             message.append(TextSendMessage(text='此序號已被使用過'))
                         elif getattr(user_info,key.code) == 1:
-                            message.append(TextSendMessage(text='你已經有 '+key.company+' 的鑰匙了'))
+                            message.append(TextSendMessage(text='您已經有 '+key.company+' 的鑰匙了'))
                         else:
                             print("good")
                             setattr(user_info,key.code,1)
@@ -195,7 +195,7 @@ def callback(request):
                             user_info.keys += 1
                             key.save()
                             user_info.save()
-                            message.append(TextSendMessage(text=f'恭喜你獲得 {key.company} 的鑰匙\n 您現在擁有{user_info.keys}把鑰匙'))
+                            message.append(TextSendMessage(text=f'恭喜您獲得 {key.company} 的鑰匙\n 您現在擁有{user_info.keys}把鑰匙'))
                     except:
                         message.append(TextSendMessage(text='功能暫不開放或請輸入正確指令'))
                 line_bot_api.reply_message(event.reply_token,message)
