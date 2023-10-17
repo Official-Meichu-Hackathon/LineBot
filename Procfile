@@ -1,0 +1,1 @@
+web: gunicorn linebot_2023.wsgi
