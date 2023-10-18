@@ -8,7 +8,7 @@ class User_Info(models.Model):
     mtext = models.CharField(max_length=255,blank=True,null=False)      #文字訊息紀錄
     mdt = models.DateTimeField(auto_now=True)                           #物件儲存的日期時間
     raffle = models.IntegerField(default=0)
-    prize = models.CharField(max_length=255,null=False,default='參加獎')
+    prize = models.CharField(max_length=255,null=False,default='尚未開放抽獎')
     keys = models.IntegerField(default=0)
     line = models.BooleanField(default=False)
     google = models.BooleanField(default=False)
