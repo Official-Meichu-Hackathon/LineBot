@@ -56,7 +56,7 @@ def callback(request):
                 if (mtext in admin_list) and (uid in admin_ids):# is admin
                     if mtext == '梅竹黑客松開始抽獎':
                         all_raffle = Raffle.objects.all()
-                        raffles=[[],[],[]]
+                        raffles=[[],[],[],[]]
                         all_user = User_Info.objects.all()
                         for user in all_user: #reset
                             print(user.id, user.name, user.raffle, user.prize)    
@@ -152,11 +152,12 @@ def callback(request):
                         if getattr(user_info,a) == 0:
                             mes+=b+'\n'
                     message.append(TextSendMessage(text=mes))  
-                elif re.match(r"查看Level \d 抽獎券",mtext):
+                elif re.match(r"查看Level \d 獎品",mtext):
                     message.append(TextSendMessage(text=award[int(mtext[8])-1]))
                 elif re.match(r"兌換Level \d 抽獎券",mtext):
-                    addition = key_need[int(mtext[8])]
+                    addition = key_need[user_info.raffle]
                     print(addition)
+                    print(user_info.keys)
                     if addition+user_info.keys< int(key_need[int(mtext[8])]):
                         message.append(TextSendMessage(text=f'你的鑰匙不夠喔，需要 {key_need[int(mtext[8])]} 把鑰匙'))
                     else:
